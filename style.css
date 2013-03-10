@@ -1,3 +1,18 @@
 body {
-  
+  font-family: "vollkorn regular", georgia, serif;
+  background: #fcfcfc;
+  color: #151515;
+  font-size: 62.5%;
+} 
+
+.main-text {
+  width: 50rem;
+  margin: 10% auto;
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+.main-text > p {
+  text-indent: 4rem;
 }
