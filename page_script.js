@@ -14,14 +14,12 @@ var removedWords = ["a", "the", "to", "be", "of",
                     "this", "but", "his", "by", "from", 
                     "they", "we", "say", "her", "she",
                     "or", "an", "will", "my", "one", "am", 
-                    "is", "would"];
+                    "is", "would", "was", "there", "their"];
 
 var removedWordsRegExp = [];
 for (var i = 0; i < removedWords.length; i++) {
   removedWordsRegExp.push(new RegExp("\\s" + removedWords[i] + "\\s", "g"));
 };
-
-console.log(removedWordsRegExp);
 
 function Prompter() {
   //the visual display of the current document
@@ -52,6 +50,7 @@ SpeechListener.prototype.startListener = function() {
   //starts the listener
   sp.listener.continuous = true;
   sp.listener.interimResults = true;
+  sp.listener.maxResults = 3;
   sp.listener.start();
 }
 
@@ -65,12 +64,9 @@ SpeechListener.prototype.clean = function(input) {
       returnString += input[c];
     }
   }
-  console.log(returnString)
   for (var i = 0; i < removedWordsRegExp.length; i++) {
     returnString = returnString.replace(removedWordsRegExp[i], ' ');
   };
-
-  console.log(returnString) 
   return returnString;
 }
 
@@ -97,19 +93,28 @@ SpeechListener.prototype.printTranscript = function(input) {
     if(sp.position === i) {
       fullString += "|";
     }
+    else {
+      fullString += " ";
+    }
     if(input[i].highlighted === true) {
       fullString += "["
+    }
+    else {
+      fullString += " ";
     }
     fullString += input[i].word;
     if(input[i].highlighted === true) {
       fullString += "]"
+    }
+    else {
+      fullString += " ";
     }
     fullString += " ";
   }
   console.log(fullString);
 }
 
-SpeechListener.prototype.transcriptDiff = function(oldTranscript, newTranscript) {
+SpeechListener.prototype.transcriptDiff = function(oldTranscript, newTranscripts) {
   //finds the first difference between two transcripts, and returns the rest of the new transcript
   if(oldTranscript.length > newTranscript.length){
     return newTranscript;
@@ -142,8 +147,12 @@ SpeechListener.prototype.markRead = function(diff) {
 
 SpeechListener.prototype.processEvent = function(event) {
   //process speech events
-  var transcript = this.makeTranscript(event.results[0][0].transcript);
-  var diff =  this.transcriptDiff(this.previousInputTranscript, transcript);
+  var transcriptArray = []
+  for (var i = 0; i < event.results[0].length; i++) {
+    event.results[0][i]
+  };
+  var transcript = transcriptArray[0];
+  var diff =  this.transcriptDiff(this.previousInputTranscript, transcriptArray);
   this.printTranscript(diff);
   this.markRead(diff);
   this.printTranscript(this.transcript);
