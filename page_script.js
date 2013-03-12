@@ -47,21 +47,23 @@ function SpeechListener() {
 }
 
 SpeechListener.prototype.startListener = function() {
-  sp.listener.onaudiostart = function() {
+  this.listener.onaudiostart = function() {
     console.log("Speak now"); 
   }
 
-  sp.listener.onerror = function(event) {
+  this.listener.onerror = function(event) {
     console.log("Error");
     console.log(event);
+    sp.listener = new SpeechRecognition();
+    sp.startListener();
   }
 
-  sp.listener.onresult = sp.processEvent.bind(sp);
+  this.listener.onresult = sp.processEvent.bind(sp);
   //starts the listener
-  sp.listener.continuous = true;
-  sp.listener.interimResults = true;
-  sp.listener.maxAlternatives = 3;
-  sp.listener.start();
+  this.listener.continuous = true;
+  this.listener.interimResults = true;
+  this.listener.maxAlternatives = 2;
+  this.listener.start();
 }
 
 SpeechListener.prototype.clean = function(input) {
@@ -136,7 +138,6 @@ SpeechListener.prototype.transcriptDiff = function(oldTranscript, newTranscripts
       for (var k = 0; k < uniqueWords.length; k++) {
         if(uniqueWords[k].word === transcriptWord.word) {
           transcriptWord.seen = true;
-          continue;
         }
       }
       if(transcriptWord.seen !== false) {
@@ -164,18 +165,36 @@ SpeechListener.prototype.transcriptDiff = function(oldTranscript, newTranscripts
   return newWords;
 }
 
+SpeechListener.prototype.movePosition = function(index) {
+  if(this.transcript[index - 2].highlighted && this.transcript[index - 1].highlighted) {
+    this.position = index + 1;
+    this.markAllUnread();
+    console.log("cursor moved to: ", this.position);
+    for (var i = this.position - 2; i < this.position + 2; i++) {
+      console.log("context \t\t", this.transcript[i].word );
+    };
+  }
+}
+
 SpeechListener.prototype.markRead = function(diff) {
   for (var i = this.position; i < this.transcript.length; i++) {
     var removeList = [];
     for (var j = 0; j < diff.length; j++) {
       if(diff[j].word === this.transcript[i].word) {
         this.transcript[i].highlighted = true;
-        removeList += [j]
-        continue;
+        removeList += [j];
+        this.movePosition(i);
       }
     }
-    for (var j = 0; j < removeList.length; j++) {
-      diff.pop(j);
+  }
+  for (var i = this.position; i > 0; i--) {
+    var removeList = [];
+    for (var j = 0; j < diff.length; j++) {
+      if(diff[j].word === this.transcript[i].word) {
+        this.transcript[i].highlighted = true;
+        removeList += [j];
+        this.movePosition(i);
+      }
     }
   }
 }
