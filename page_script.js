@@ -1,25 +1,35 @@
 //load the speech event object
-this.SpeechRecognition = window.SpeechRecognition || 
-                          window.webkitSpeechRecognition || 
-                          window.mozSpeechRecognition || 
-                          window.oSpeechRecognition || 
-                          window.msSpeechRecognition;   
+this.SpeechRecognition = window.SpeechRecognition ||
+                          window.webkitSpeechRecognition ||
+                          window.mozSpeechRecognition ||
+                          window.oSpeechRecognition ||
+                          window.msSpeechRecognition;
 
 
 //Words that are common and hard for speech recognition to hear
-var removedWords = ["a", "the", "to", "be", "of", 
-                    "and", "in", "that", "have", 
-                    "i", "it", "not", "on", "with", 
-                    "he", "as", "you", "do", "at", 
-                    "this", "but", "his", "by", "from", 
+removedWords = ["a", "the", "to", "be", "of",
+                    "and", "in", "that", "have",
+                    "i", "it", "not", "on", "with",
+                    "he", "as", "you", "do", "at",
+                    "this", "but", "his", "by", "from",
                     "they", "we", "say", "her", "she",
-                    "or", "an", "will", "my", "one", "am", 
+                    "or", "an", "will", "my", "one", "am",
                     "is", "would", "was", "there", "their"];
 
-var removedWordsRegExp = [];
-for (var i = 0; i < removedWords.length; i++) {
-  removedWordsRegExp.push(new RegExp("\\s" + removedWords[i] + "\\s", "g"));
-};
+//turns an array of strings
+//into an array of regular expressions
+//to search for those words
+var makeRegExp = function (a) {
+  var i, regExp;
+  regExp = [];
+  for (i = 0; i < a.length; i += 1) {
+    regExp.push(new RegExp("\\s" + a[i] + "\\s", "g"));
+  }
+  return regExp;
+}
+
+removedWordsRegExp = makeRegExp(removedWords);
+
 
 function Prompter() {
   //the visual display of the current document
@@ -39,18 +49,18 @@ function SpeechListener() {
 SpeechListener.prototype.startListener = function() {
   sp.listener.onaudiostart = function() {
     console.log("Speak now"); 
-  };
+  }
 
   sp.listener.onerror = function(event) {
     console.log("Error");
     console.log(event);
-  };
+  }
 
   sp.listener.onresult = sp.processEvent.bind(sp);
   //starts the listener
   sp.listener.continuous = true;
   sp.listener.interimResults = true;
-  sp.listener.maxResults = 3;
+  sp.listener.maxAlternatives = 3;
   sp.listener.start();
 }
 
@@ -82,7 +92,7 @@ SpeechListener.prototype.makeTranscript = function(input) {
     newObject.highlighted = false;
     newObject.index = i - numberRemoved;
     transcript.push(newObject);
-  };
+  }
   return transcript;
 }
 
@@ -116,18 +126,42 @@ SpeechListener.prototype.printTranscript = function(input) {
 
 SpeechListener.prototype.transcriptDiff = function(oldTranscript, newTranscripts) {
   //finds the first difference between two transcripts, and returns the rest of the new transcript
-  if(oldTranscript.length > newTranscript.length){
-    return newTranscript;
-  }
-  for (var i = 0; i < oldTranscript.length; i++) {
-    if(oldTranscript[i].word !== newTranscript[i].word) {
-      return newTranscript.slice(i);
+
+  var uniqueWords = [];
+  //produces all of the unique words in the current speech event
+  for (var i = 0; i < newTranscripts.length; i++) {
+    var newTranscript = newTranscripts[i];
+    for (var j = 0; j < newTranscript.length; j++) {
+      var transcriptWord = newTranscript[j];
+      for (var k = 0; k < uniqueWords.length; k++) {
+        if(uniqueWords[k].word === transcriptWord.word) {
+          transcriptWord.seen = true;
+          continue;
+        }
+      }
+      if(transcriptWord.seen !== false) {
+        uniqueWords.push(transcriptWord);
+        transcriptWord.seen = false;
+      }
     }
   }
-  if(newTranscript.length > oldTranscript.length){
-    return newTranscript.slice(oldTranscript.length);
+
+  //Find all the words in the unique transcript which are not in
+  //the old transcript
+  var newWords = [];
+  for (var i = 0; i < uniqueWords.length; i++) {
+    var word = uniqueWords[i];
+    for (var j = 0; j < oldTranscript.length; j++) {
+      if(oldTranscript[j].word === word.word) {
+        word.seen = true;
+      }
+    }
+    if(word.seen !== true) {
+      newWords.push(word);
+      word.seen = false;
+    }
   }
-  return "";
+  return newWords;
 }
 
 SpeechListener.prototype.markRead = function(diff) {
@@ -137,6 +171,7 @@ SpeechListener.prototype.markRead = function(diff) {
       if(diff[j].word === this.transcript[i].word) {
         this.transcript[i].highlighted = true;
         removeList += [j]
+        continue;
       }
     }
     for (var j = 0; j < removeList.length; j++) {
@@ -145,12 +180,19 @@ SpeechListener.prototype.markRead = function(diff) {
   }
 }
 
+SpeechListener.prototype.markAllUnread = function() {
+  for (var i = 0; i < this.transcript.length; i++) {
+    this.transcript[i].highlighted = false;
+  }
+}
+
 SpeechListener.prototype.processEvent = function(event) {
   //process speech events
   var transcriptArray = []
-  for (var i = 0; i < event.results[0].length; i++) {
-    event.results[0][i]
-  };
+  console.log(event);
+  for (var i = 0; i < event.results[event.results.length - 1].length; i++) {
+    transcriptArray.push(this.makeTranscript(event.results[event.results.length - 1][i].transcript));
+  }
   var transcript = transcriptArray[0];
   var diff =  this.transcriptDiff(this.previousInputTranscript, transcriptArray);
   this.printTranscript(diff);
