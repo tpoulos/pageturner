@@ -355,19 +355,45 @@ $(document).ready(function() {
   else {
     sp.startListener();
   }
-  $("#instructions-menu").slideUp(0);
-  $("#settings-menu").slideUp(0);
-  $("#text-menu").slideUp(0);
+  $(".menu").slideUp(0);
+
+  var selectedMenu = "";
+  var slideSpeed = 500;
 
   $("#settings-button").click(function() {
-    $("#settings-menu").slideToggle(500);
+    if(selectedMenu === "#settings-menu") {
+      $(selectedMenu).slideUp(slideSpeed);
+      selectedMenu = "";
+    }
+    else {
+      $(selectedMenu).slideUp(slideSpeed);
+      selectedMenu = "#settings-menu";
+      $(selectedMenu).slideDown(slideSpeed);
+    }
   });
+
   $("#text-button").click(function() {
-    $("#text-menu").slideToggle(500);
+    if(selectedMenu === "#text-menu") {
+      $(selectedMenu).slideUp(slideSpeed);
+      selectedMenu = "";
+    }
+    else {
+      $(selectedMenu).slideUp(slideSpeed);
+      selectedMenu = "#text-menu";
+      $(selectedMenu).slideDown(slideSpeed);
+    }
   });
+
   $("#instructions-button").click(function() {
-    console.log("something")
-    $("#instructions-menu").slideToggle(500);
+    if(selectedMenu === "#instructions-menu") {
+      $(selectedMenu).slideUp(slideSpeed);
+      selectedMenu = "";
+    }
+    else {
+      $(selectedMenu).slideUp(slideSpeed);
+      selectedMenu = "#instructions-menu";
+      $(selectedMenu).slideDown(slideSpeed);
+    }
   });
 
   $("#debug-toggle").click(function(){

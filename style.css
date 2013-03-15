@@ -121,9 +121,12 @@ body {
 
 .menu .setting {
   margin: 0 0.5rem;
-  font-size: 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
   font-weight: 300;
+  border: 1px solid grey;
+  padding: 0rem 0.2rem;
+  border-radius: 6px;
   -moz-user-select: none; 
   -khtml-user-select: none; 
   -webkit-user-select: none; 
@@ -132,6 +135,7 @@ body {
 
 .menu .setting:hover {
   color: #006EF5;
+  border: 1px solid #006EF5;
 }
 
 .menu h3 {
