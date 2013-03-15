@@ -6,37 +6,61 @@
     <meta name="description" content="A web template that responds to the user's speech using the google web speech API.">
     <meta name="keywords" content="template">
     <meta name="author" content="Taylor Poulos">
-    <link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
-
+    <script type="text/javascript" src="//use.typekit.net/fih5vgo.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="reset.css">
     <link href="style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+    <div class="logo-container" id="logo-container">
+      <div class="progress-bar"> </div>
+      <div class="logo">
+        <span class="light">web</span><span class="dark">Promptr</span>
+      </div>
+    </div>
+
     <div class="main-text" id="transcript">
+    </div>
 
+    <div class="edit-menu"> 
+      <div class="nav-menu">
+        <span class="category" id="instructions-button">Instructions</span>
+        <span class="category" id="settings-button">Settings</span> 
+        <span class="category" id="text-button">New Text</span>
+        <div class="menu" id="instructions-menu">
+          <h3>Instructions</h3>
+          <p>Some instructions</p>
+          <p>Some more instructions </p>
+          <p>Even more instructions </p>
+          <p>Them's some nice instructions </p>
+          <p> Really perty, and I mean that, I ain't just saying it </p>
 
-      <p>[Randy Pausch, Sept 18th 2007, Carnegie Mellon University]</p>
-
-      <p>Remember brick walls let us show our dedication. They are there to separate us from the people who don't really want to achieve their childhood dreams. </p>
-
-      <p>Get a feedback loop and listen to it. Your feedback loop can be this dorky spreadsheet thing I did, or it can just be one great man who tells you what you need to hear. The hard part is the listening to it. Anybody can get chewed out. It's the rare person who says, "oh my god, you were right" as opposed to, "no wait, the real reason is... ," we've all heard that before. When people give you feedback, cherish it and use it. Show gratitude. When I got tenure I took all of my research team down to Disneyworld for a week. And one of the other professors at Virginia said, how can you do that? I said these people just busted their ass and got me the best job in the world for life. How could I not do that? </p>
-
-      <p>Don't complain. Just work harder. That's a picture of Jackie Robinson. It was in his contract not to complain, even when the fans spit on him. Be good at something, it makes you valuable. Work hard. I got tenure a year early as Steve mentioned. Junior faculty members used to say to me, wow, you got tenure early. What's your secret? I said, it's pretty simple. Call my any Friday night in my office at ten o'clock and I'll tell you.</p>
-
-
-      <p>Find the best in everybody. One of the things that Jon Snoddy as I said told me, is that you might have to wait a long time, sometimes years, but people will show you their good side. Just keep waiting no matter how long it takes. No one is all evil. Everybody has a good side, just keep waiting, it will come out. And be prepared. Luck is truly where preparation meets opportunity. So today's talk was about my childhood dreams, enabling the dreams of others, and some lessons learned. But did you figure out the head fake?</p>
-
-      <p>It's not about how to achieve your dreams. It's about how to lead your life. If you lead your life the right way, the karma will take care of itself. The dreams will come to you.</p> 
-
-      <p>Have you figured out the second head fake? </p>
-
-      <p>The talk's not for you, it's for my kids. </p>
-
-      <p>Thank you all, </p>
-      <p>good night.</p>
-
+        </div>
+        <div class="menu" id="settings-menu">
+          <h3> Settings </h3>
+          <div class="setting-holder">
+            <span class="setting-label">Font Size:</span>
+            <span class="setting" id="size-toggle">medium</span>
+          </div>
+          <div class="setting-holder">
+            <span class="setting-label">Fullscreen:</span>
+            <span class="setting" id="fullscreen-toggle">off</span>
+          </div>
+          <div class="setting-holder">
+            <span class="setting-label">Debug Mode:</span>
+            <span class="setting" id="debug-toggle">off</span>
+          </div>
+        </div>
+        <div class="menu" id="text-menu">
+          <h3>Enter your text</h3>
+          <p>Be sure that your text contains no special punctuation.</p>
+          <p>Speeches with lots of nonsense words, proper nouns, or repetitive phrases will not work so well.</p>
+          <textarea id="text-entry"></textarea>
+          <span class="setting submit" id="submit-text">Submit Text </span>
+        </div>
+      </div>
     </div>
 
 
