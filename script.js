@@ -5,8 +5,9 @@ this.SpeechRecognition = window.SpeechRecognition ||
                           window.oSpeechRecognition ||
                           window.msSpeechRecognition;
 
-var forwardLookDistance = 20;
+var forwardLookDistance = 15;
 var debugColors = false;
+var scrollSpeed = 300;
 
 //Words that are common and hard for speech recognition to hear
 removedWords = ["a", "the", "to", "be", "of",
@@ -17,7 +18,7 @@ removedWords = ["a", "the", "to", "be", "of",
                 "they", "we", "say", "her", "she",
                 "or", "an", "will", "my", "one", "am",
                 "is", "would", "was", "there", "their",
-                "were", "how"];
+                "were", "how", "not"];
 
 fontSettings =  [
                   {
@@ -48,7 +49,8 @@ ppSettings =  [
                     "margin-bottom": "4rem"
                   }
                 ];
-GETTYSBURG_ADDRESS = "Four score and seven years ago our fathers brought forth, upon this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. \n Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived, and so dedicated, can long endure. We are met here on a great battlefield of that war. We have come to dedicate a portion of it, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this. \n But in a larger sense, we can not dedicate - we can not consecrate - we can not hallow - this ground. The brave men, living and dead, who struggled here, have consecrated it far above our poor power to add or detract. The world will little note, nor long remember, what we say here, but can never forget what they did here. \n It is for us, the living, rather to be dedicated here to the unfinished work which they have, thus far, so nobly carried on. It is rather for us to be here dedicated to the great task remaining before us - that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion - that we here highly resolve that these dead shall not have died in vain; that this nation shall have a new birth of freedom; and that this government of the people, by the people, for the people, shall not perish from the earth."
+
+GETTYSBURG_ADDRESS = "Four score and seven years ago our fathers brought forth, upon this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. \n Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met here on a great battlefield of that war. We have come to dedicate a portion of it, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this. \n But in a larger sense, we can not dedicate - we can not consecrate - we can not hallow - this ground. The brave men, living and dead, who struggled here, have consecrated it far above our poor power to add or detract. The world will little note, nor long remember, what we say here, but can never forget what they did here. \n It is for us, the living, rather to be dedicated here to the unfinished work which they have, thus far, so nobly carried on. It is rather for us to be here dedicated to the great task remaining before us - that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion - that we here highly resolve that these dead shall not have died in vain; that this nation shall have a new birth of freedom; and that this government of the people, by the people, for the people, shall not perish from the earth."
 
 //turns an array of strings
 //into an array of regular expressions
@@ -297,7 +299,7 @@ SpeechListener.prototype.markReadForward = function(diff) {
     for (var j = 0; j < diff.length; j++) {
       if(diff[j].word === this.prompter.transcript[i].word) {
         this.prompter.transcript[i].highlighted = true;
-        if(debugColors = true) {
+        if(debugColors === true) {
           $(this.prompter.transcript[i].id).css("color", "red");
         }
         removeList += [j];
@@ -340,7 +342,7 @@ $.fn.scrollView = function () {
     return this.each(function () {
         $('html, body').animate({
             scrollTop: $(this).offset().top
-        }, 100);
+        }, scrollSpeed);
 
         updateProgress();
     });
