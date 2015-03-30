@@ -358,7 +358,7 @@ $(document).ready(function() {
   $(".menu").slideUp(0);
 
   var selectedMenu = "";
-  var slideSpeed = 500;
+  var slideSpeed = 0;
 
   $("#settings-button").click(function() {
     if(selectedMenu === "#settings-menu") {
