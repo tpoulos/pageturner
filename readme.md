@@ -1,5 +1,4 @@
-#Web Teleprompter
-
+#[Web Teleprompter](http://twp.io/teleprompter/)
 
 This is the web teleprompter project. It started in March of 2013, a few days after the [web speech API](http://updates.html5rocks.com/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API) was released in chrome. I brainstormed projects that might use this API, and came up with the idea of making a teleprompter built entirely on web technologies, that could listen to you and move your script entirely automatically.
 
@@ -36,3 +35,7 @@ Then, the algorithm assumes that the user is starting at the beginning. It liste
 Once a certain number of previous words has been read (three of the last four is the number I chose after much tweaking) that word becomes the new starting point. The transcript moves forward to that word, and the full text is scrolled so that that word is at the top of the screen.
 
 This allows the teleprompter to handle imprecise readings, while being performant and robust.
+
+###Live Demo
+
+You can see a [live demo](http://twp.io/teleprompter/) of the teleprompter.
