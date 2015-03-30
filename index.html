@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <title>Template HTML</title>
-    
+
     <meta name="description" content="A web template that responds to the user's speech using the google web speech API.">
     <meta name="keywords" content="template">
     <meta name="author" content="Taylor Poulos">
@@ -24,20 +24,11 @@
     <div class="main-text" id="transcript">
     </div>
 
-    <div class="edit-menu"> 
+    <div class="edit-menu">
       <div class="nav-menu">
         <span class="category" id="instructions-button">Instructions</span>
-        <span class="category" id="settings-button">Settings</span> 
+        <span class="category" id="settings-button">Settings</span>
         <span class="category" id="text-button">New Text</span>
-        <div class="menu" id="instructions-menu">
-          <h3>Instructions</h3>
-          <p>Some instructions</p>
-          <p>Some more instructions </p>
-          <p>Even more instructions </p>
-          <p>Them's some nice instructions </p>
-          <p> Really perty, and I mean that, I ain't just saying it </p>
-
-        </div>
         <div class="menu" id="settings-menu">
           <h3> Settings </h3>
           <div class="setting-holder">
@@ -50,13 +41,13 @@
           </div>
           <div class="setting-holder">
             <span class="setting-label">Debug Mode:</span>
-            <span class="setting" id="debug-toggle">off</span>
+            <span class="setting" id="debug-toggle">on</span>
           </div>
         </div>
         <div class="menu" id="text-menu">
           <h3>Enter your text</h3>
           <p>Be sure that your text contains no special punctuation.</p>
-          <p>Speeches with lots of nonsense words, proper nouns, or repetitive phrases will not work so well.</p>
+          <p>Speeches with lots of nonsense words, proper nouns, or repetitive phrases will likely not work.</p>
           <textarea id="text-entry"></textarea>
           <span class="setting submit" id="submit-text">Submit Text </span>
         </div>
@@ -65,6 +56,6 @@
 
 
 	<script src="jquery-1.9.0.js"></script>
-  <script src="page_script.js"></script>
+  <script src="script.js"></script>
 	</body>
 </html>

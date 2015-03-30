@@ -16,14 +16,14 @@ removedWords = ["a", "the", "to", "be", "of",
                 "this", "but", "his", "by", "from",
                 "they", "we", "say", "her", "she",
                 "or", "an", "will", "my", "one", "am",
-                "is", "would", "was", "there", "their", 
+                "is", "would", "was", "there", "their",
                 "were", "how"];
 
 fontSettings =  [
                   {
                     "font-size": "2rem",
                     "width": "45%",
-                    "margin": "20%"
+                    "margin": "15%"
                   },
                   {
                     "font-size": "3rem",
@@ -48,9 +48,7 @@ ppSettings =  [
                     "margin-bottom": "4rem"
                   }
                 ];
-
-
-randyPausch = "Most people don't know that this lecture series used to be called the Last Lecture. If you had one last lecture to give before you died, what would it be? I thought, damn, I finally nailed the venue and they renamed it. \n So, you know, in case there's anybody who wandered in and doesn't know the back story, my dad always taught me that when there's an elephant in the room, introduce them. If you look at my CAT scans, there are approximately 10 tumors in my liver, and the doctors told me 3-6 months of good health left. That was a month ago, so you can do the math. I have some of the best doctors in the world. \n So that is what it is. We can't change it, and we just have to decide how we're going to respond to that. We cannot change the cards we are dealt, just how we play the hand. If I don't seem as depressed or morose as I should be, sorry to disappoint you. And I assure you I am not in denial. It's not like I'm not aware of what's going on. My family, my three kids, my wife,we just decamped. We bought a lovely house in Virginia, and we're doing that because that's a better place for the family to be, down the road. And the other thing is I am in phenomenally good health right now. I mean it's the greatest thing of cognitive dissonance you will ever see is the fact that I am in really good shape. In fact, I am in better shape than most of you. [gets on the ground and starts doing pushups] So anybody who wants to cry or pity me can down and do a few of those, and then you may pity me. \n All right, so what we're not talking about today, we are not talking about cancer, because I spent a lot of time talking about that and I'm really not interested. If you have any herbal supplements or remedies, please stay away from me.  And we're not going to talk about things that are even more important than achieving your childhood dreams. We're not going to talk about my wife, we're not talking about my kids. Because I'm good, but I'm not good enough to talk about that without tearing up. So, we're just going to take that off the table. That's much more important. What is today's talk about then? It's about my childhood dreams and how I have achieved them. I've been very fortunate that way. How I believe I've been able to enable the dreams of others, and to some degree, lessons learned. I'm a professor, there should be some lessons learned and how you can use the stuff you hear today to achieve your dreams or enable the dreams of others. And as you get older, you may find that \"enabling the dreams of others\" thing is even more fun. \n So what were my childhood dreams? Well, you know, I had a really good childhood. I mean, no kidding around. I was going back through the family archives, and what was really amazing was, I couldn't find any pictures of me as a kid where I wasn't smiling. And that was just a very gratifying thing. There was our dog, right? Aww, thank you. And there I actually have a picture of me dreaming. I did a lot of that. You know, there's a lot of wake up's! I was born in 1960. When you are 8 or 9 years old and you look at the TV set, men are landing on the moon, anything's possible. And that's something we should not lose sight of, is that the inspiration and the permission to dream is huge. \n So what were my childhood dreams? You may not agree with this list, but I was there. Being in zero gravity, playing in the National Football League, authoring an article in the World Book Encyclopedia – I guess you can tell the nerds early. Being Captain Kirk, anybody here have that childhood dream? Not at CMU, nooooo. I wanted to become one of the guys who won the big stuffed animals in the amusement park, and I wanted to be an Imagineer with Disney. These are not sorted in any particular order, although I think they do get harder, except for maybe the first one."
+GETTYSBURG_ADDRESS = "Four score and seven years ago our fathers brought forth, upon this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. \n Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived, and so dedicated, can long endure. We are met here on a great battlefield of that war. We have come to dedicate a portion of it, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this. \n But in a larger sense, we can not dedicate - we can not consecrate - we can not hallow - this ground. The brave men, living and dead, who struggled here, have consecrated it far above our poor power to add or detract. The world will little note, nor long remember, what we say here, but can never forget what they did here. \n It is for us, the living, rather to be dedicated here to the unfinished work which they have, thus far, so nobly carried on. It is rather for us to be here dedicated to the great task remaining before us - that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion - that we here highly resolve that these dead shall not have died in vain; that this nation shall have a new birth of freedom; and that this government of the people, by the people, for the people, shall not perish from the earth."
 
 //turns an array of strings
 //into an array of regular expressions
@@ -71,7 +69,7 @@ removedWordsRegExp = makeRegExp(removedWords);
 function Prompter() {
   //the visual display of the current document
   this.$ = $("#transcript");
-  this.newText(randyPausch);
+  this.newText(GETTYSBURG_ADDRESS);
 }
 
 Prompter.prototype.newText = function(text) {
@@ -111,7 +109,7 @@ Prompter.prototype.processText = function(rawText) {
 }
 
 function SpeechListener() {
-  //the processer of the speech events
+  //the processor of the speech events
   this.prompter = new Prompter();
   this.position = 0;
   this.previousInputTranscript = [];
@@ -120,7 +118,7 @@ function SpeechListener() {
 SpeechListener.prototype.startListener = function() {
   this.listener = new SpeechRecognition();
   this.listener.onaudiostart = function() {
-    console.log("Speak now"); 
+    console.log("Speak now");
   }
 
   this.listener.onerror = function(event) {
@@ -349,7 +347,7 @@ $.fn.scrollView = function () {
 }
 
 $(document).ready(function() {
-  if (SpeechRecognition === undefined) {  
+  if (SpeechRecognition === undefined) {
     $("#transcript").html("Your browser is bad, and you should feel bad.")
   }
   else {
@@ -414,7 +412,7 @@ $(document).ready(function() {
     }
     else {
       $("#fullscreen-toggle").text("on");
-      document.documentElement.webkitRequestFullScreen(); 
+      document.documentElement.webkitRequestFullScreen();
     }
   });
 
@@ -447,4 +445,3 @@ $(document).ready(function() {
     updateProgress();
   })
 });
-
