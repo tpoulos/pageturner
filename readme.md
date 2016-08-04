@@ -1,6 +1,6 @@
-#[Web Teleprompter](http://twp.io/teleprompter/)
+#[Pageturner](http://twp.io/teleprompter/)
 
-This is the web teleprompter project. It started in March of 2013, a few days after the [web speech API](http://updates.html5rocks.com/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API) was released in chrome. I brainstormed projects that might use this API, and came up with the idea of making a teleprompter built entirely on web technologies, that could listen to you and move your script entirely automatically.
+This is a web teleprompter project. It started in March of 2013, a few days after the [web speech API](http://updates.html5rocks.com/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API) was released in chrome. I brainstormed projects that might use this API, and came up with the idea of making a teleprompter built entirely on web technologies, that could listen to you and move your script entirely automatically.
 
 ###Research
 Most teleprompters use a small nob or dial as input, which the speaker is able to move back and forth to speed up or slow down the scrolling of the display. Typography in most teleprompters is rudimentary, with all caps text in white or green on a black background, generally in a sans-serif face. It is important for the text to be white on black, as it is often reflected (using reflective glass) under the hood of a camera, allowing the speaker to directly look into the camera while reading the text.
