@@ -350,7 +350,7 @@ $.fn.scrollView = function () {
 
 $(document).ready(function() {
   if (SpeechRecognition === undefined) {
-    $("#transcript").html("Your browser is bad, and you should feel bad.")
+    $("#transcript").html("This demo only works in <a href='https://www.google.com/chrome/browser/desktop/index.html?brand=CHBD&gclid=COq-sra5qM4CFYVehgodrToLxQ'>Google Chrome</a>")
   }
   else {
     sp.startListener();
